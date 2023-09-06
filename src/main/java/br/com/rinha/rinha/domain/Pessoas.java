@@ -1,26 +1,32 @@
 package br.com.rinha.rinha.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_pessoas")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pessoas implements Serializable {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    @Column(name = "nome", length = 32)
     private String nome;
+    @Column(name = "cpfCnpj", unique = true, length = 14)
     private String cpfCnpj;
     private LocalDate nascimento;
-    private LinkedList<String> seguros = new LinkedList<>();
-
+    @ElementCollection
+    private List<String> seguros = new ArrayList<>();
 
 }
