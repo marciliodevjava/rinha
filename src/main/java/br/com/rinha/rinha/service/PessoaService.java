@@ -20,14 +20,10 @@ public class PessoaService {
 
     public PessoaRetornoDto salvar(PessoaDto pessoaDto) {
         Pessoas pessoas = pessoaMapper.mapearPessoaSalvar(pessoaDto);
-        Optional<Pessoas> retorno = pessoasRepository.salvarPessoa(pessoas.getId(),
-                pessoas.getNome(),
-                pessoas.getCpfCnpj(),
-                pessoas.getNascimento(),
-                pessoas.getSeguros());
-        if (retorno.isPresent()){
+        pessoasRepository.save(pessoas);
+        if (pessoas != null) {
             PessoaRetornoDto dto = new PessoaRetornoDto();
-            dto = pessoaMapper.mapearPessoaRetornoDto(retorno);
+            dto = pessoaMapper.mapearPessoaRetornoDto(Optional.of(pessoas));
             return dto;
         }
         throw new ErroSalvarPessoaException();
