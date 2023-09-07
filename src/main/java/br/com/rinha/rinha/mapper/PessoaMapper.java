@@ -22,8 +22,8 @@ public class PessoaMapper {
         if (Objects.nonNull(pessoaDto)) {
             Pessoas pessoas = new Pessoas();
             pessoas.setId(geradorUuid.gerarUuid());
-            pessoas.setNome(pessoas.getNome());
-            pessoas.setCpfCnpj(pessoas.getCpfCnpj());
+            pessoas.setNome(pessoaDto.getNome());
+            pessoas.setCpfCnpj(pessoaDto.getCpfCnpj());
             pessoas.setNascimento(formatadorUtils.dataStringDate(pessoaDto.getNacimento()));
             pessoas.setSeguros(pessoaDto.getSeguros());
             return pessoas;
@@ -34,12 +34,12 @@ public class PessoaMapper {
     public PessoaRetornoDto mapearPessoaRetornoDto(Optional<Pessoas> retorno) {
         PessoaRetornoDto dto = new PessoaRetornoDto();
         if (retorno != null) {
-            Pessoas retPes = retorno.get();
-            dto.setId(retPes.getId());
-            dto.setNome(retPes.getNome());
-            dto.getCpfCnpj();
-            dto.setNacimento(formatadorUtils.dataDateString(retPes.getNascimento()));
-            dto.setSeguros(retPes.getSeguros());
+            Pessoas pessoas = retorno.get();
+            dto.setId(pessoas.getId());
+            dto.setNome(pessoas.getNome());
+            dto.setCpfCnpj(pessoas.getCpfCnpj());
+            dto.setNacimento(formatadorUtils.dataDateString(pessoas.getNascimento()));
+            dto.setSeguros(pessoas.getSeguros());
             return dto;
         }
         return null;
