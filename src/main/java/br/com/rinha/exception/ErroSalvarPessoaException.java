@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.exception;
+package br.com.rinha.exception;
 
 public class ErroSalvarPessoaException extends RuntimeException {
     public ErroSalvarPessoaException(){

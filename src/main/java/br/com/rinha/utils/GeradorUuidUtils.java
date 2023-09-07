@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.utils;
+package br.com.rinha.utils;
 
 import org.springframework.stereotype.Component;
 

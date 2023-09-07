@@ -1,6 +1,6 @@
-package br.com.rinha.rinha.infra;
+package br.com.rinha.infra;
 
-import br.com.rinha.rinha.enuns.MensagemEnum;
+import br.com.rinha.enuns.MensagemEnum;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.infra;
+package br.com.rinha.infra;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

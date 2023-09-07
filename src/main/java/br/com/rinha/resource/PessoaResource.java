@@ -1,8 +1,8 @@
-package br.com.rinha.rinha.resource;
+package br.com.rinha.resource;
 
-import br.com.rinha.rinha.dto.request.PessoaDto;
-import br.com.rinha.rinha.dto.response.PessoaRetornoDto;
-import br.com.rinha.rinha.service.PessoaService;
+import br.com.rinha.dto.request.PessoaDto;
+import br.com.rinha.dto.response.PessoaRetornoDto;
+import br.com.rinha.service.PessoaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

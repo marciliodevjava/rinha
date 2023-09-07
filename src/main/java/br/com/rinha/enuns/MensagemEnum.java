@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.enuns;
+package br.com.rinha.enuns;
 
 public enum MensagemEnum {
     ERRO_CPF_DUPLICADO_EXCEPTION("Esse CPF já constra cadastrado");

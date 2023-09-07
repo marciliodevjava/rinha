@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.domain;
+package br.com.rinha.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package br.com.rinha.rinha.dto.request;
+package br.com.rinha.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
