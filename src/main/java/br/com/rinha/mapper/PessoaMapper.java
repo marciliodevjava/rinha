@@ -2,8 +2,8 @@ package br.com.rinha.mapper;
 import br.com.rinha.domain.Pessoas;
 import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
-import br.com.rinha.rinha.utils.FormatadorUtils;
-import br.com.rinha.rinha.utils.GeradorUuidUtils;
+import br.com.rinha.utils.FormatadorUtils;
+import br.com.rinha.utils.GeradorUuidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
