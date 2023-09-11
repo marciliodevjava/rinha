@@ -1,0 +1,19 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234567890"
+      MYSQL_DATABASE: pessoa
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 768m
+
+networks:
+  default:
