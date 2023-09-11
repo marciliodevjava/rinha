@@ -1,9 +1,10 @@
-FROM openjdk:17-jdk-slim
+# Dockerfile para app1
+FROM openjdk:17.0.2-slim
 
 WORKDIR /app
 
-COPY target/rinha.jar app.jar
+COPY target/rinha-0.0.1.jar ./rinha-app.jar
 
-EXPOSE 8080
+ENV JAVA_OPTS="-XX:MaxRAM=430m -XX:MaxRAMFraction=4"
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "rinha-app.jar"]
