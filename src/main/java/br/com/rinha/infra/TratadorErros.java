@@ -2,6 +2,7 @@ package br.com.rinha.infra;
 
 import br.com.rinha.enuns.MensagemEnum;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
+import br.com.rinha.exception.ErroUuidInvalidoException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 public class TratadorErros {
@@ -92,6 +94,31 @@ public class TratadorErros {
         ErroResponse erro = new ErroResponse();
         erro.setStatus(HttpStatus.BAD_REQUEST.value());
         erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_METODO_INVALIDO_EXCEPTION.getMensagem() + resposta));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<ErroResponse> erroCansoNulo(NoSuchElementException ex) {
+
+        String resposta = this.capturaTipoRequisição(ex.getMessage());
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_ID_NAO_EXCEPTION.getMensagem() + resposta));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ErroUuidInvalidoException.class)
+    public ResponseEntity<ErroResponse> uuidInvalido(ErroUuidInvalidoException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_UUID_IVALIDO_EXCEPTION.getMensagem()));
         erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         erro.setEndpoint(request.getRequestURI());
         erro.setProjeto(projeto);
