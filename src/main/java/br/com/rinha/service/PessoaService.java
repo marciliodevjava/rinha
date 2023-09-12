@@ -5,6 +5,7 @@ import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
 import br.com.rinha.exception.ErroSalvarPessoaException;
+import br.com.rinha.exception.ErroUuidInvalidoException;
 import br.com.rinha.mapper.PessoaMapper;
 import br.com.rinha.repository.PessoasRepository;
 import br.com.rinha.utils.ValidadorUuid;
@@ -47,6 +48,7 @@ public class PessoaService {
             List<String> seguros = new ArrayList<>();
 
             Optional<Pessoas> pessoas = pessoasRepository.buscarPessoa(id);
+            if (pessoas.equals(Optional.empty())) throw new ErroBuscarIdSeguroException();
             List<String> seguro = pessoasRepository.buscarSegurosId(id);
 
             if (!seguro.isEmpty()){
@@ -59,7 +61,7 @@ public class PessoaService {
 
             return dto = pessoaMapper.mapearPessoaRetornoDto(pessoas);
         }
-        return null;
+        throw new ErroUuidInvalidoException();
     }
 
     public List<PessoaRetornoDto> buscarPessoaIdList(String id) {
