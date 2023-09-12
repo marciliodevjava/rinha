@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaResource {
+
     @Autowired
     private PessoaService pessoaService;
 
@@ -27,19 +28,19 @@ public class PessoaResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PessoaRetornoDto> buscar(@PathVariable String id){
+    public ResponseEntity<PessoaRetornoDto> buscar(@PathVariable String id) {
         PessoaRetornoDto retorno = pessoaService.buscarPessoaId(id);
         return ResponseEntity.ok(retorno);
     }
 
     @GetMapping
     public ResponseEntity<List<PessoaRetornoDto>> buscarSeguros(@RequestParam(required = false, name = "id") String id,
-                                                               @RequestParam(required = false, name = "seguros") String seguros){
+                                                                @RequestParam(required = false, name = "seguros") String seguros) {
         List<PessoaRetornoDto> retorno;
-        if (id != null){
+        if (id != null) {
             retorno = pessoaService.buscarPessoaIdList(id);
             return ResponseEntity.ok(retorno);
-        } else if (seguros != null){
+        } else if (seguros != null) {
             retorno = pessoaService.buscarPessoaSeguros(seguros);
             return ResponseEntity.ok(retorno);
         } else {

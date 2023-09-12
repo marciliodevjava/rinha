@@ -11,6 +11,8 @@ import java.lang.annotation.*;
 @Constraint(validatedBy = CPFCNPJValidator.class)
 public @interface CPFouCNPJ {
     String message() default "CPF ou CNPJ inválido";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }
