@@ -1,22 +1,5 @@
 version: '3'
 services:
-  mysql:
-    image: mysql:5.7
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: "1234567890"
-      MYSQL_DATABASE: pessoa
-    volumes:
-      - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf
-    networks:
-      - default
-    deploy:
-      resources:
-        limits:
-          cpus: '0.30'
-          memory: 768m
-
   haproxy:
     image: haproxy:latest
     ports:
