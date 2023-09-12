@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 @Component
 public class FormatadorUtils {
+
     public LocalDate dataStringDate(String nacimento) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
