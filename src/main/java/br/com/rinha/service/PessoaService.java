@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @Service
 public class PessoaService {
+
     @Autowired
     private PessoaMapper pessoaMapper;
     @Autowired
@@ -51,7 +52,7 @@ public class PessoaService {
             if (pessoas.equals(Optional.empty())) throw new ErroBuscarIdSeguroException();
             List<String> seguro = pessoasRepository.buscarSegurosId(id);
 
-            if (!seguro.isEmpty()){
+            if (!seguro.isEmpty()) {
                 seguro.forEach(seg -> {
                     seguros.add(this.extrairSeguro(seg));
                 });
@@ -74,7 +75,7 @@ public class PessoaService {
             Optional<Pessoas> pessoas = pessoasRepository.buscarPessoa(id);
             List<String> seguro = pessoasRepository.buscarSegurosId(id);
 
-            if (!seguro.isEmpty()){
+            if (!seguro.isEmpty()) {
                 seguro.forEach(seg -> {
                     seguros.add(this.extrairSeguro(seg));
                 });
@@ -91,7 +92,7 @@ public class PessoaService {
     }
 
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
-        if(id == null){
+        if (id == null) {
             return null;
         }
 

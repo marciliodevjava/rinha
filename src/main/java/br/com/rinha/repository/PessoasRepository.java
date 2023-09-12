@@ -24,6 +24,7 @@ public interface PessoasRepository extends JpaRepository<Pessoas, String> {
                       @Param("nome") String nome,
                       @Param("cpfCnpj") String cpfCnpj,
                       @Param("nascimento") LocalDate nascimento);
+
     @Transactional
     @Modifying
     @Query(value = """
@@ -37,6 +38,7 @@ public interface PessoasRepository extends JpaRepository<Pessoas, String> {
 
     @Query(value = "SELECT * FROM pessoa.pessoas_seguros WHERE pessoas_id = :id", nativeQuery = true)
     List<String> buscarSegurosId(@Param("id") String id);
+
     @Query(value = "SELECT * FROM pessoa.pessoas_seguros WHERE seguros = :seguros", nativeQuery = true)
     List<String> buscarSeguros(@Param("seguros") String seguros);
 }

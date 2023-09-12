@@ -126,9 +126,9 @@ public class TratadorErros {
     }
 
     private String capturaTipoRequisição(String message) {
-        String[] requisicao = {"PUT","PATCH","DELETE","OPTIONS","HEAD"};
-        for (int i = 0; i <= requisicao.length; i++){
-            if(message.contains(requisicao[i])){
+        String[] requisicao = {"PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"};
+        for (int i = 0; i <= requisicao.length; i++) {
+            if (message.contains(requisicao[i])) {
                 return requisicao[i];
             }
         }
