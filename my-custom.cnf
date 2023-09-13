@@ -1,10 +1,10 @@
+# Configurações do MySQL (my.cnf)
 [mysqld]
-
 # Restringindo o uso de recursos
 max_connections = 100
-innodb_buffer_pool_size = 128M
-query_cache_size = 16M
-key_buffer_size = 32M
+innodb_buffer_pool_size = 768M  # Aumentado para 768MB, ajuste conforme a disponibilidade de RAM
+query_cache_size = 64M  # Aumentado para 64MB
+key_buffer_size = 64M  # Aumentado para 64MB
 
 # Arquivo de log lento para consultas que levam mais de 1 segundo
 log_slow_queries = /var/log/mysql/mysql-slow.log
@@ -15,7 +15,13 @@ log-bin = /var/lib/mysql/mysql-bin
 server-id = 1
 
 # Tamanho máximo do pacote de rede
-max_allowed_packet = 8M
+max_allowed_packet = 16M  # Aumentado para 16MB para acomodar operações maiores
 
 # Formato de armazenamento de texto
 text_binlog = OFF
+
+# Desativar consulta DNS reversa (pode melhorar o desempenho)
+skip-name-resolve
+
+# Desativar logs de consulta geral (opcional, depende das necessidades de registro)
+general_log = 0
