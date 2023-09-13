@@ -3,14 +3,17 @@ services:
   haproxy:
     image: haproxy:latest
     ports:
-      - "80:80"
+      - "9999:9999"
     volumes:
       - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     deploy:
       resources:
         limits:
-          cpus: '0.25'
+          cpus: '0.20'
           memory: 256m
+        reservations:
+          cpus: '0.023'
+          memory: 64mb
 
   app1:
     build:
@@ -31,8 +34,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.475'
+          cpus: '0.49'
           memory: 1g
+        reservations:
+          cpus: '0.125'
+          memory: 257mb
     hostname: app1
 
   app2:
@@ -54,8 +60,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.475'
+          cpus: '0.49'
           memory: 1g
+        reservations:
+          cpus: '0.125'
+          memory: 257mb
     hostname: app2
 
 networks:
