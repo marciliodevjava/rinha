@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -93,10 +94,23 @@ public class PessoaService {
 
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
         if (id == null) {
+            List<String> listSeguros = extrairSeguro(pessoasRepository.buscarSeguros(id));
             return null;
         }
 
         throw new ErroBuscarIdSeguroException();
+    }
+
+    private List<String> extrairSeguro(List<String> strings) {
+        List<String> list = new ArrayList<>();
+        if (Objects.nonNull(strings)) {
+            strings.forEach(seg -> {
+                list.add(extrairSeguro(seg));
+            });
+
+            return list;
+        }
+        return null;
     }
 
     private String extrairSeguro(String seg) {
