@@ -95,6 +95,7 @@ public class PessoaService {
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
         if (id == null) {
             List<String> listSeguros = extrairSeguro(pessoasRepository.buscarSeguros(id));
+            listSeguros.forEach();
             return null;
         }
 
