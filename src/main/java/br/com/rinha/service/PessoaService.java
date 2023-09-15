@@ -94,8 +94,9 @@ public class PessoaService {
 
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
         List<PessoaRetornoDto> listPessoa = new ArrayList<>();
-        if (id == null) {
+        if (id != null) {
             List<String> listSeguros = extrairId(pessoasRepository.buscarSeguros(id));
+            if (Objects.isNull(listSeguros)) throw new ErroBuscarIdSeguroException();
             listSeguros.forEach(a -> {
                 PessoaRetornoDto dto = new PessoaRetornoDto();
                 dto = this.buscarPessoaId(a);
@@ -124,11 +125,16 @@ public class PessoaService {
         return partir[1];
     }
 
+    private String extrairId(String seg) {
+        String[] partir = seg.split(",");
+        return partir[0];
+    }
+
     private List<String> extrairId(List<String> strings) {
         List<String> list = new ArrayList<>();
         if (Objects.nonNull(strings)) {
             strings.forEach(seg -> {
-                list.add(extrairSeguro(seg));
+                list.add(extrairId(seg));
             });
 
             return list;
