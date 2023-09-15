@@ -93,10 +93,15 @@ public class PessoaService {
     }
 
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
+        List<PessoaRetornoDto> listPessoa = new ArrayList<>();
         if (id == null) {
-            List<String> listSeguros = extrairSeguro(pessoasRepository.buscarSeguros(id));
-            listSeguros.forEach();
-            return null;
+            List<String> listSeguros = extrairId(pessoasRepository.buscarSeguros(id));
+            listSeguros.forEach(a -> {
+                PessoaRetornoDto dto = new PessoaRetornoDto();
+                dto = this.buscarPessoaId(a);
+                listPessoa.add(dto);
+            });
+            return listPessoa;
         }
 
         throw new ErroBuscarIdSeguroException();
@@ -117,5 +122,17 @@ public class PessoaService {
     private String extrairSeguro(String seg) {
         String[] partir = seg.split(",");
         return partir[1];
+    }
+
+    private List<String> extrairId(List<String> strings) {
+        List<String> list = new ArrayList<>();
+        if (Objects.nonNull(strings)) {
+            strings.forEach(seg -> {
+                list.add(extrairSeguro(seg));
+            });
+
+            return list;
+        }
+        return null;
     }
 }
