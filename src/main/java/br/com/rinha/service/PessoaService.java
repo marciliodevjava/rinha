@@ -103,7 +103,7 @@ public class PessoaService {
                 dto = this.buscarPessoaId(a);
                 listPessoa.add(dto);
             });
-            if(listSeguros.isEmpty()) throw new ErroBuscarSeguroVazioException();
+//            if(listSeguros.isEmpty()) throw new ErroBuscarSeguroVazioException();
             return listPessoa;
         }
 
