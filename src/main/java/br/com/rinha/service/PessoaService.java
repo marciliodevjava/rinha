@@ -4,6 +4,7 @@ import br.com.rinha.domain.Pessoas;
 import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
+import br.com.rinha.exception.ErroBuscarSeguroVazioException;
 import br.com.rinha.exception.ErroSalvarPessoaException;
 import br.com.rinha.exception.ErroUuidInvalidoException;
 import br.com.rinha.mapper.PessoaMapper;
@@ -102,6 +103,7 @@ public class PessoaService {
                 dto = this.buscarPessoaId(a);
                 listPessoa.add(dto);
             });
+            if(listSeguros.isEmpty()) throw new ErroBuscarSeguroVazioException();
             return listPessoa;
         }
 
