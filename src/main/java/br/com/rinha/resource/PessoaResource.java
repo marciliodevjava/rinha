@@ -3,6 +3,7 @@ package br.com.rinha.resource;
 import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
+import br.com.rinha.exception.ErroBuscarSeguroVazioException;
 import br.com.rinha.service.PessoaService;
 import br.com.rinha.utils.ValidadeSeguro;
 import br.com.rinha.utils.ValidadorUuid;
@@ -40,7 +41,7 @@ public class PessoaResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<PessoaRetornoDto>> buscarSeguros(@RequestParam (required = true, name = "t") String termo) {
+    public ResponseEntity<List<PessoaRetornoDto>> buscarSeguros(@RequestParam(required = true, name = "t") String termo) {
 
         List<PessoaRetornoDto> retorno;
         boolean validaTermno = validadorUuid.isValidUUID(termo);
@@ -52,7 +53,7 @@ public class PessoaResource {
             retorno = pessoaService.buscarPessoaSeguros(termo);
             return ResponseEntity.ok(retorno);
         } else {
-            throw new ErroBuscarIdSeguroException();
+            throw new ErroBuscarSeguroVazioException();
         }
     }
 }
