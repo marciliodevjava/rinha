@@ -2,11 +2,10 @@ package br.com.rinha.resource;
 
 import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
-import br.com.rinha.exception.ErroBuscarIdSeguroException;
 import br.com.rinha.exception.ErroBuscarSeguroVazioException;
 import br.com.rinha.service.PessoaService;
+import br.com.rinha.utils.ValidaNome;
 import br.com.rinha.utils.ValidadeSeguro;
-import br.com.rinha.utils.ValidadorUuid;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,7 @@ public class PessoaResource {
     @Autowired
     private PessoaService pessoaService;
     @Autowired
-    private ValidadorUuid validadorUuid;
+    private ValidaNome validaNome;
     @Autowired
     private ValidadeSeguro validadeSeguro;
 
@@ -44,10 +43,10 @@ public class PessoaResource {
     public ResponseEntity<List<PessoaRetornoDto>> buscarSeguros(@RequestParam(required = true, name = "t") String termo) {
 
         List<PessoaRetornoDto> retorno;
-        boolean validaTermno = validadorUuid.isValidUUID(termo);
+        boolean validaTermno = validaNome.validadorNome(termo);
         boolean validaSeguro = validadeSeguro.validadeSeguro(termo);
         if (validaTermno == true) {
-            retorno = pessoaService.buscarPessoaIdList(termo);
+            retorno = pessoaService.buscarPessoaNomeList(termo);
             return ResponseEntity.ok(retorno);
         } else if (validaSeguro == true) {
             retorno = pessoaService.buscarPessoaSeguros(termo);
