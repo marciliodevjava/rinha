@@ -14,6 +14,12 @@ services:
         reservations:
           cpus: '0.023'
           memory: 64mb
+    networks:
+      my_network:
+        ipv4_address: 172.23.0.10  # Substitua pelo IP desejado
+    hostname: haproxy
+    extra_hosts:
+      - "api:172.23.0.10"  # Substitua pelo IP correto do serviço "api"
 
   app1:
     build:
@@ -30,7 +36,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_APPLICATION_NAME: pessoa-ms
     networks:
-      - default
+      my_network:
     deploy:
       resources:
         limits:
@@ -40,6 +46,8 @@ services:
           cpus: '0.125'
           memory: 257mb
     hostname: app1
+    extra_hosts:
+      - "api:172.23.0.10"  # Definindo o nome "api" para o endereço IP do serviço "api"
 
   app2:
     build:
@@ -56,7 +64,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_APPLICATION_NAME: pessoa-ms
     networks:
-      - default
+      my_network:
     deploy:
       resources:
         limits:
@@ -66,6 +74,12 @@ services:
           cpus: '0.125'
           memory: 257mb
     hostname: app2
+    extra_hosts:
+      - "api:172.23.0.10"  # Definindo o nome "api" para o endereço IP do serviço "api"
 
 networks:
-  default:
+  my_network:
+    driver: bridge  # Define a rede como bridge
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24  # Define a faixa de sub-rede da rede
