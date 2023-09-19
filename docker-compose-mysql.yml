@@ -10,7 +10,7 @@ services:
     volumes:
       - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf
     networks:
-      - default
+      - my_network
     deploy:
       resources:
         limits:
@@ -21,4 +21,8 @@ services:
           memory: 192m
 
 networks:
-  default:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
