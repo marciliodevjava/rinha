@@ -4,11 +4,11 @@ import br.com.rinha.domain.Pessoas;
 import br.com.rinha.dto.request.PessoaDto;
 import br.com.rinha.dto.response.PessoaRetornoDto;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
-import br.com.rinha.exception.ErroBuscarSeguroVazioException;
 import br.com.rinha.exception.ErroSalvarPessoaException;
 import br.com.rinha.exception.ErroUuidInvalidoException;
 import br.com.rinha.mapper.PessoaMapper;
 import br.com.rinha.repository.PessoasRepository;
+import br.com.rinha.utils.ValidaNome;
 import br.com.rinha.utils.ValidadorUuid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,8 @@ public class PessoaService {
     private PessoasRepository pessoasRepository;
     @Autowired
     private ValidadorUuid validadorUuid;
+    @Autowired
+    private ValidaNome validaNome;
 
     public PessoaRetornoDto salvar(PessoaDto pessoaDto) {
         Pessoas pessoas = pessoaMapper.mapearPessoaSalvar(pessoaDto);
@@ -67,28 +69,17 @@ public class PessoaService {
         throw new ErroUuidInvalidoException();
     }
 
-    public List<PessoaRetornoDto> buscarPessoaIdList(String id) {
-        boolean valida = validadorUuid.isValidUUID(id);
+    public List<PessoaRetornoDto> buscarPessoaNomeList(String nome) {
+        boolean valida = validaNome.validadorNome(nome);
         if (valida == true) {
             List<PessoaRetornoDto> retornoDto = new ArrayList<>();
-            PessoaRetornoDto dto = new PessoaRetornoDto();
             List<String> seguros = new ArrayList<>();
 
-            Optional<Pessoas> pessoas = pessoasRepository.buscarPessoa(id);
-            List<String> seguro = pessoasRepository.buscarSegurosId(id);
-
-            if (!seguro.isEmpty()) {
-                seguro.forEach(seg -> {
-                    seguros.add(this.extrairSeguro(seg));
-                });
-
-                pessoas.get().setSeguros(seguros);
+            List<Pessoas> pessoas = pessoasRepository.buscarPessoaNome(nome);
+            if (Objects.nonNull(pessoas)){
+                retornoDto = pessoaMapper.mapearPessoaListRetorno(pessoas);
+                return retornoDto;
             }
-
-            dto = pessoaMapper.mapearPessoaRetornoDto(pessoas);
-            retornoDto.add(dto);
-
-            return retornoDto;
         }
         throw new ErroBuscarIdSeguroException();
     }
