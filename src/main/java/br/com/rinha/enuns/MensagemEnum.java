@@ -8,7 +8,7 @@ public enum MensagemEnum {
     ERRO_BUSCAR_ID_SEGUROS_EXCEPTION("Campo id e seguros sem nenhum parametro valido."),
     ERRO_ID_NAO_EXCEPTION("Sem dados nessa consulta."),
     ERRO_UUID_IVALIDO_EXCEPTION("O id da solicitação não é um id válido."),
-    ERRO_SEGURO_IVALIDO_EXCEPTION("Não existe seguros com esse nome em nossa base de dados."),
+    ERRO_SEGURO_IVALIDO_EXCEPTION("Informar t é obrigatório."),
     ERRO_TERMO_IVALIDO_EXCEPTION("Informar t é obrigatório.");
 
     private final String mensagem;
