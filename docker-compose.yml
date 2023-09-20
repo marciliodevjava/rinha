@@ -6,6 +6,7 @@ services:
       - "9999:9999"
     volumes:
       - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+      - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/hosts.personalizado
     deploy:
       resources:
         limits:
@@ -17,9 +18,11 @@ services:
     networks:
       my_network:
         ipv4_address: 172.23.0.10  # Substitua pelo IP desejado
+        aliases:
+          - api
     hostname: haproxy
     extra_hosts:
-      - "api:172.23.0.10"  # Substitua pelo IP correto do serviço "api"
+      - "api:172.23.0.10"
 
   app1:
     build:
