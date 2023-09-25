@@ -1,12 +1,11 @@
 version: '3'
 services:
-  haproxy:
-    image: haproxy:latest
+  nginx:
+    image: nginx:latest
     ports:
-      - "9999:9999"
+      - "9999:80"
     volumes:
-      - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-      - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/hosts.personalizado
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Monta o arquivo nginx.conf no contêiner
     deploy:
       resources:
         limits:
@@ -17,12 +16,16 @@ services:
           memory: 64mb
     networks:
       my_network:
-        ipv4_address: 172.23.0.10  # Substitua pelo IP desejado
+        ipv4_address: 172.23.0.10
         aliases:
           - api
-    hostname: haproxy
+    hostname: nginx
     extra_hosts:
       - "api:172.23.0.10"
+      - "api:127.0.0.1"
+    depends_on:
+      - app1
+      - app2
 
   app1:
     build:
@@ -39,7 +42,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_APPLICATION_NAME: pessoa-ms
     networks:
-      my_network:
+      - my_network
     deploy:
       resources:
         limits:
@@ -49,8 +52,6 @@ services:
           cpus: '0.125'
           memory: 257mb
     hostname: app1
-    extra_hosts:
-      - "api:172.23.0.10"  # Definindo o nome "api" para o endereço IP do serviço "api"
 
   app2:
     build:
@@ -67,7 +68,7 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
       SPRING_APPLICATION_NAME: pessoa-ms
     networks:
-      my_network:
+      - my_network
     deploy:
       resources:
         limits:
@@ -77,12 +78,10 @@ services:
           cpus: '0.125'
           memory: 257mb
     hostname: app2
-    extra_hosts:
-      - "api:172.23.0.10"  # Definindo o nome "api" para o endereço IP do serviço "api"
 
 networks:
   my_network:
-    driver: bridge  # Define a rede como bridge
+    driver: bridge
     ipam:
       config:
-        - subnet: 172.23.0.0/24  # Define a faixa de sub-rede da rede
+        - subnet: 172.23.0.0/24
