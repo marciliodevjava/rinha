@@ -75,7 +75,7 @@ public class PessoaService {
             List<PessoaRetornoDto> retornoDto = new ArrayList<>();
 
             List<Pessoas> pessoas = pessoasRepository.buscarPessoaNome(nome);
-            if (Objects.nonNull(pessoas)){
+            if (Objects.nonNull(pessoas)) {
                 retornoDto = pessoaMapper.mapearPessoaListRetorno(pessoas);
                 return retornoDto;
             }
