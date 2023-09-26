@@ -17,7 +17,7 @@ public class ValidaNome {
         nome = nome.trim();
         if (nome.length() >= 1 && nome.length() <= 32) {
             Optional<Pessoas> pessoas = pessoasRepository.buscarPessoaNomeExiste(nome);
-            if (Objects.nonNull(pessoas)&& pessoas.isPresent()) return true;
+            if (Objects.nonNull(pessoas) && pessoas.isPresent()) return true;
             else return false;
         }
         return false;
