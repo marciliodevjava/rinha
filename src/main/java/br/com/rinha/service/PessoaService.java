@@ -73,7 +73,6 @@ public class PessoaService {
         boolean valida = validaNome.validadorNome(nome);
         if (valida == true) {
             List<PessoaRetornoDto> retornoDto = new ArrayList<>();
-            List<String> seguros = new ArrayList<>();
 
             List<Pessoas> pessoas = pessoasRepository.buscarPessoaNome(nome);
             if (Objects.nonNull(pessoas)){
@@ -88,7 +87,6 @@ public class PessoaService {
         List<PessoaRetornoDto> listPessoa = new ArrayList<>();
         if (id != null) {
             List<String> listSeguros = extrairId(pessoasRepository.buscarSeguros(id));
-            if (Objects.isNull(listSeguros)) throw new ErroBuscarIdSeguroException();
             listSeguros.forEach(a -> {
                 PessoaRetornoDto dto = new PessoaRetornoDto();
                 dto = this.buscarPessoaId(a);
