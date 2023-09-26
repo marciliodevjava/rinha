@@ -51,12 +51,11 @@ public class PessoaMapper {
     public PessoaRetornoDto mapearPessoaRetornoDto(Pessoas retorno) {
         PessoaRetornoDto dto = new PessoaRetornoDto();
         if (retorno != null) {
-            Pessoas pessoas = retorno;
-            dto.setId(pessoas.getId());
-            dto.setNome(pessoas.getNome());
-            dto.setCpfCnpj(pessoas.getCpfCnpj());
-            dto.setNacimento(formatadorUtils.dataDateString(pessoas.getNascimento()));
-            dto.setSeguros(this.verificaSeguro(pessoas.getSeguros()));
+            dto.setId(retorno.getId());
+            dto.setNome(retorno.getNome());
+            dto.setCpfCnpj(retorno.getCpfCnpj());
+            dto.setNacimento(formatadorUtils.dataDateString(retorno.getNascimento()));
+            dto.setSeguros(this.verificaSeguro(retorno.getSeguros()));
             return dto;
         }
         return null;
