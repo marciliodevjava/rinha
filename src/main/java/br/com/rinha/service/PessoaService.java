@@ -8,8 +8,10 @@ import br.com.rinha.exception.ErroSalvarPessoaException;
 import br.com.rinha.exception.ErroUuidInvalidoException;
 import br.com.rinha.mapper.PessoaMapper;
 import br.com.rinha.repository.PessoasRepository;
+import br.com.rinha.utils.ValidaNome;
 import br.com.rinha.utils.ValidadorUuid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class PessoaService {
     private PessoasRepository pessoasRepository;
     @Autowired
     private ValidadorUuid validadorUuid;
+    @Autowired
+    private ValidaNome validaNome;
 
     public PessoaRetornoDto salvar(PessoaDto pessoaDto) {
         Pessoas pessoas = pessoaMapper.mapearPessoaSalvar(pessoaDto);
@@ -43,6 +47,7 @@ public class PessoaService {
         throw new ErroSalvarPessoaException();
     }
 
+    @Cacheable(cacheNames = "buscarPessoaId")
     public PessoaRetornoDto buscarPessoaId(String id) {
         boolean valida = validadorUuid.isValidUUID(id);
         if (valida == true) {
@@ -66,36 +71,32 @@ public class PessoaService {
         throw new ErroUuidInvalidoException();
     }
 
-    public List<PessoaRetornoDto> buscarPessoaIdList(String id) {
-        boolean valida = validadorUuid.isValidUUID(id);
+    @Cacheable(cacheNames = "buscarPessoaNomeList")
+    public List<PessoaRetornoDto> buscarPessoaNomeList(String nome) {
+        boolean valida = validaNome.validadorNome(nome);
         if (valida == true) {
             List<PessoaRetornoDto> retornoDto = new ArrayList<>();
-            PessoaRetornoDto dto = new PessoaRetornoDto();
-            List<String> seguros = new ArrayList<>();
 
-            Optional<Pessoas> pessoas = pessoasRepository.buscarPessoa(id);
-            List<String> seguro = pessoasRepository.buscarSegurosId(id);
-
-            if (!seguro.isEmpty()) {
-                seguro.forEach(seg -> {
-                    seguros.add(this.extrairSeguro(seg));
-                });
-
-                pessoas.get().setSeguros(seguros);
+            List<Pessoas> pessoas = pessoasRepository.buscarPessoaNome(nome);
+            if (Objects.nonNull(pessoas)) {
+                retornoDto = pessoaMapper.mapearPessoaListRetorno(pessoas);
+                return retornoDto;
             }
-
-            dto = pessoaMapper.mapearPessoaRetornoDto(pessoas);
-            retornoDto.add(dto);
-
-            return retornoDto;
         }
         throw new ErroBuscarIdSeguroException();
     }
 
+    @Cacheable(cacheNames = "buscarPessoaSeguros")
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
-        if (id == null) {
-            List<String> listSeguros = extrairSeguro(pessoasRepository.buscarSeguros(id));
-            return null;
+        List<PessoaRetornoDto> listPessoa = new ArrayList<>();
+        if (id != null) {
+            List<String> listSeguros = extrairId(pessoasRepository.buscarSeguros(id));
+            listSeguros.forEach(a -> {
+                PessoaRetornoDto dto = new PessoaRetornoDto();
+                dto = this.buscarPessoaId(a);
+                listPessoa.add(dto);
+            });
+            return listPessoa;
         }
 
         throw new ErroBuscarIdSeguroException();
@@ -116,5 +117,22 @@ public class PessoaService {
     private String extrairSeguro(String seg) {
         String[] partir = seg.split(",");
         return partir[1];
+    }
+
+    private String extrairId(String seg) {
+        String[] partir = seg.split(",");
+        return partir[0];
+    }
+
+    private List<String> extrairId(List<String> strings) {
+        List<String> list = new ArrayList<>();
+        if (Objects.nonNull(strings)) {
+            strings.forEach(seg -> {
+                list.add(extrairId(seg));
+            });
+
+            return list;
+        }
+        return null;
     }
 }
