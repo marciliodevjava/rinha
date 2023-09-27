@@ -32,8 +32,8 @@ services:
           cpus: '0.2'
           memory: 256m
         reservations:
-          cpus: '0.10'
-          memory: 76m
+          cpus: '0.15'
+          memory: 128m
 
   app1:
     build:
