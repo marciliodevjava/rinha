@@ -1,8 +1,5 @@
 package br.com.rinha.rinha.service;
 
-import br.com.rinha.domain.Pessoas;
-import br.com.rinha.dto.request.PessoaDto;
-import br.com.rinha.dto.response.PessoaRetornoDto;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
 import br.com.rinha.exception.ErroUuidInvalidoException;
 import br.com.rinha.mapper.PessoaMapper;
@@ -18,10 +15,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
