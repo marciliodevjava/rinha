@@ -1,47 +1,41 @@
 version: '3'
 services:
-  haproxy:
-    image: haproxy:latest
+  mysql:
+    image: mysql:5.7
     ports:
-      - "9999:9999"
-    volumes:
-      - C:\Users\Nova\Documents\Nova Tendencia\EMISSAO JAVA\rinha\haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
-    deploy:
-      resources:
-        limits:
-          cpus: '0.20'
-          memory: 256m
-        reservations:
-          cpus: '0.023'
-          memory: 64mb
-
-  app1:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8082:8080"
+      - "3307:3306"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pessoa
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 1234567890
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-      SPRING_APPLICATION_NAME: pessoa-ms
+      MYSQL_ROOT_PASSWORD: "1234567890"
+      MYSQL_DATABASE: pessoa
+    volumes:
+      - ./my-custom.cnf:/etc/mysql/conf.d/my-custom.cnf
     networks:
       - default
     deploy:
       resources:
         limits:
-          cpus: '0.49'
-          memory: 1g
+          cpus: '0.30'
+          memory: 768mb
         reservations:
-          cpus: '0.125'
-          memory: 257mb
-    hostname: app1
+          cpus: '0.10'
+          memory: 128mb
 
-  app2:
+  haproxy:
+    image: haproxy:latest
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 256m
+        reservations:
+          cpus: '0.10'
+          memory: 76m
+
+  app1:
     build:
       context: .
       dockerfile: Dockerfile
@@ -60,11 +54,37 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.49'
+          cpus: '0.5'
           memory: 1g
         reservations:
-          cpus: '0.125'
-          memory: 257mb
+          cpus: '0.2'
+          memory: 396m
+    hostname: app1
+
+  app2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pessoa
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234567890
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SPRING_APPLICATION_NAME: pessoa-ms
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1g
+        reservations:
+          cpus: '0.2'
+          memory: 396m
     hostname: app2
 
 networks:
