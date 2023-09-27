@@ -120,7 +120,7 @@ Resposta de Sucesso: Retorna os detalhes da pessoa com o ID especificado.
   Configurações  
 
 
-- A API utiliza um banco de dados MySQL e é implantada em containers Docker. As configurações do Docker Compose incluem contêineres para o MySQL, HAProxy (balanceador de carga). dois contêineres da aplicação API.
+- A API utiliza um banco de dados MySQL e é implantada em containers Docker. As configurações do Docker Compose incluem contêineres para o MySQL, NGINX (balanceador de carga). dois contêineres da aplicação API.
 
 
 - MySQL:
