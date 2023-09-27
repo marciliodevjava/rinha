@@ -8,6 +8,8 @@ import br.com.rinha.utils.GeradorUuidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -40,8 +42,39 @@ public class PessoaMapper {
             dto.setNome(pessoas.getNome());
             dto.setCpfCnpj(pessoas.getCpfCnpj());
             dto.setNacimento(formatadorUtils.dataDateString(pessoas.getNascimento()));
-            dto.setSeguros(pessoas.getSeguros());
+            dto.setSeguros(this.verificaSeguro(pessoas.getSeguros()));
             return dto;
+        }
+        return null;
+    }
+
+    public PessoaRetornoDto mapearPessoaRetornoDto(Pessoas retorno) {
+        PessoaRetornoDto dto = new PessoaRetornoDto();
+        if (retorno != null) {
+            dto.setId(retorno.getId());
+            dto.setNome(retorno.getNome());
+            dto.setCpfCnpj(retorno.getCpfCnpj());
+            dto.setNacimento(formatadorUtils.dataDateString(retorno.getNascimento()));
+            dto.setSeguros(this.verificaSeguro(retorno.getSeguros()));
+            return dto;
+        }
+        return null;
+    }
+
+    private List<String> verificaSeguro(List<String> seguros) {
+        if (seguros.isEmpty()) return null;
+        return seguros;
+    }
+
+    public List<PessoaRetornoDto> mapearPessoaListRetorno(List<Pessoas> pessoas) {
+        List<PessoaRetornoDto> listDto = new ArrayList<>();
+        if (Objects.nonNull(pessoas)) {
+            pessoas.forEach(pes -> {
+                PessoaRetornoDto dto = new PessoaRetornoDto();
+                dto = this.mapearPessoaRetornoDto(pes);
+                listDto.add(dto);
+            });
+            return listDto;
         }
         return null;
     }
