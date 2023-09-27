@@ -131,7 +131,25 @@ Usuário: root
 Senha: 1234567890  
 Banco de dados: pessoa  
 
-Aplicação:
+
+- **Executar a aplicação:**
+  ```json
+    docker-compose -f docker-compose-mysql.yml up -d
+
+* Você vai precisar desse comando para poder colocar o banco de dados para pode realizar o build do projeto pela primeira vez.   
+
+  ```json
+    mvn clean install 
+
+* Para Buildar a API   
+
+  ```json
+    docker-compose up  
+
+* Para realizar o Deploy dos conteiner no Docker    
+
+
+- **Aplicação:**
 
 Dois contêineres da aplicação expostos nas portas 8082 e 8083.
 Conexão com o banco de dados MySQL configurada nas variáveis de ambiente.
