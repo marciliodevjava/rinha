@@ -4,10 +4,10 @@ global
     group haproxy
 
 defaults
-    log global
-    mode http
-    option httplog
-    option dontlognull
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
     retries 3
     timeout http-request 10s
     timeout queue 1m
@@ -15,14 +15,17 @@ defaults
     timeout client 1m
     timeout server 1m
     timeout http-keep-alive 10s
-    timeout check 10s
+    timeout check 5s
     maxconn 1048
 
 frontend http-in
     bind *:9999
+    acl is_api hdr_beg(host) -i api
+    http-request replace-uri ^([^\ :]*)\ /api/?(.*) \1\ /\2 if is_api
+    use_backend app-backend if is_api
     default_backend app-backend
 
 backend app-backend
-    balance roundrobin # Equilibra as solicitações em um ciclo
-    server app1 app1:8080 check
-    server app2 app2:8080 check
+    balance leastconn
+    server app1 app1:8080 check weight 2
+    server app2 app2:8080 check weight 1
