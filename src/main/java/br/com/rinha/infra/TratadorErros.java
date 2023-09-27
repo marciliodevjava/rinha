@@ -2,6 +2,7 @@ package br.com.rinha.infra;
 
 import br.com.rinha.enuns.MensagemEnum;
 import br.com.rinha.exception.ErroBuscarIdSeguroException;
+import br.com.rinha.exception.ErroBuscarSeguroVazioException;
 import br.com.rinha.exception.ErroUuidInvalidoException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -119,6 +121,42 @@ public class TratadorErros {
         ErroResponse erro = new ErroResponse();
         erro.setStatus(HttpStatus.BAD_REQUEST.value());
         erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_UUID_IVALIDO_EXCEPTION.getMensagem()));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ErroBuscarSeguroVazioException.class)
+    public ResponseEntity<ErroResponse> seguroVasioInvalido(ErroBuscarSeguroVazioException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_SEGURO_IVALIDO_EXCEPTION.getMensagem()));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ErroResponse> termoRequisitado(NullPointerException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_TERMO_IVALIDO_EXCEPTION.getMensagem()));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity<ErroResponse> termoRequisitadoInvalido(MissingServletRequestParameterException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_TERMO_IVALIDO_EXCEPTION.getMensagem()));
         erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         erro.setEndpoint(request.getRequestURI());
         erro.setProjeto(projeto);
