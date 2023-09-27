@@ -13,7 +13,7 @@ public class CPFCNPJValidator implements ConstraintValidator<CPFouCNPJ, String> 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
-            return true;
+            return false;
         }
 
         if (value.length() < 11 || value.length() > 14) {
