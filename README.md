@@ -17,10 +17,12 @@ Esta é uma API de gerenciamento de pessoas e seguros.
 - **Exemplo de Requisição:**
   ```json
   {
-    "nome": "João da Silva",
-    "cpfCnpj": "123.456.789-00",
+    "nome": "Felipe Pinheiro dos Santos",
+    "cpfCnpj": "12345678900",
     "nascimento": "1990-01-01",
-    "seguros": ["Seguro de Vida", "Seguro de Automóvel"]
+    "seguros": ["Seguro de Vida", 
+                "Seguro de Automóvel"
+    ]
   }
 
 - **Exemplo de Requisição:**
@@ -28,7 +30,7 @@ Esta é uma API de gerenciamento de pessoas e seguros.
   {
     "nome": "João da Silva",
     "cpfCnpj": "123.456.789-00",
-    "nascimento": "1990-01-01",
+    "nascimento": "1990-12-21",
     "seguros": [null]
   }
 
@@ -38,9 +40,9 @@ Resposta de Sucesso: Retorna os detalhes da pessoa criada.
   ```json
     {
         "id": "743f9e0b-16da-41c0-b70d-e3af3e71adfa",
-        "nome": "Alessandra Silveira",
-        "cpfCnpj": "59582552551",
-        "nacimento": "1972-01-02",
+        "nome": "Barbara Fagundes da Silva",
+        "cpfCnpj": "59580052326",
+        "nacimento": "1989-01-02",
         "seguros": [
             "vida",
             "empresarial",
@@ -53,31 +55,69 @@ Resposta de Sucesso: Retorna os detalhes da pessoa criada.
   ```json
     {
         "id": "743f9e0b-16da-41c0-b70d-e3af3e71adfa",
-        "nome": "Alessandra Silveira",
-        "cpfCnpj": "59582552551",
+        "nome": "Rafaela Fernandes Barbosa",
+        "cpfCnpj": "95682553261",
         "nacimento": "1972-01-02",
         "seguros": [null]
     } 
 
-2. Consultar Pessoa por ID
-   URL: /pessoa/{id}
+### 2. Consultar Pessoa por ID
+   URL: /pessoa/{id}  
    Método: GET
-   Descrição: Consulta os detalhes de uma pessoa por ID.
-   Parâmetros de entrada:
-   id (String, obrigatório): ID da pessoa a ser consultada.
+   Descrição: Consulta os detalhes de uma pessoa por ID.  
+   Parâmetros de entrada:  
+   id (String, obrigatório): ID da pessoa a ser consultada.  
+   
    Exemplo de Requisição:
-   /pessoa/cafc5729-a332-448a-996b-4bea910ff7d1
-   Resposta de Sucesso: Retorna os detalhes da pessoa com o ID especificado.
-3. Buscar Pessoas por Termo
-   URL: /pessoa
-   Método: GET
-   Descrição: Busca pessoas com base em um termo de pesquisa.
-   Parâmetros de consulta:
-   t (String, obrigatório): Termo de pesquisa.
+   /pessoa/cafc5729-a332-448a-996b-4bea910ff7d1   
+
+- **Exemplo de Response:**
+  ```json
+    {
+        "id": "195f9e0t-16mm-41c1-b70a-e3af3e71udbg",
+        "nome": "Silveira Bernades",
+        "cpfCnpj": "95628552500",
+        "nacimento": "2000-05-15",
+        "seguros": [null]
+    }
+
+Resposta de Sucesso: Retorna os detalhes da pessoa com o ID especificado.
+
+
+### 3. Buscar Pessoas por Termo  
+   URL: /pessoa  
+   Método: GET  
+   Descrição: Busca pessoas com base em um termo de pesquisa.  
+   Parâmetros de consulta: t (String, obrigatório): Termo de pesquisa.    
+   
    Exemplo de Requisição:
-   /pessoa?t=João
-   Resposta de Sucesso: Retorna uma lista de pessoas que correspondem ao termo de pesquisa.
-   Configurações  
+   /pessoa?t=João   
+
+- **Exemplo de Response:**
+  ```json
+    {
+        "id": "74et6e0b-95th-89ik-n95i-8e7r3e719n5ui",
+        "nome": "Paulo Camargo",
+        "cpfCnpj": "02986915178",
+        "nacimento": "1990-01-11",
+        "seguros": [null]
+    } 
+- **Exemplo de Response:**
+  ```json
+  {
+    "nome": "Bruno de Souza",
+    "cpfCnpj": "95784678840",
+    "nascimento": "1982-02-05",
+    "seguros": ["vida", 
+                "automovel",
+                "empresarial",
+    ]
+  }
+
+
+
+ Resposta de Sucesso: Retorna uma lista de pessoas que correspondem ao termo de pesquisa.
+  Configurações  
 
 
 - A API utiliza um banco de dados MySQL e é implantada em containers Docker. As configurações do Docker Compose incluem contêineres para o MySQL, HAProxy (balanceador de carga). dois contêineres da aplicação API.
@@ -95,7 +135,6 @@ Aplicação:
 
 Dois contêineres da aplicação expostos nas portas 8082 e 8083.
 Conexão com o banco de dados MySQL configurada nas variáveis de ambiente.
-Uso
 Clone o repositório.
 Execute o Docker Compose para iniciar os contêineres.
 Acesse a API nos endpoints mencionados acima.
