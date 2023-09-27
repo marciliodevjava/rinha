@@ -11,6 +11,7 @@ import br.com.rinha.repository.PessoasRepository;
 import br.com.rinha.utils.ValidaNome;
 import br.com.rinha.utils.ValidadorUuid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
