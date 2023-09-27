@@ -11,6 +11,7 @@ import br.com.rinha.repository.PessoasRepository;
 import br.com.rinha.utils.ValidaNome;
 import br.com.rinha.utils.ValidadorUuid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class PessoaService {
         throw new ErroSalvarPessoaException();
     }
 
+    @Cacheable(cacheNames = "buscarPessoaId")
     public PessoaRetornoDto buscarPessoaId(String id) {
         boolean valida = validadorUuid.isValidUUID(id);
         if (valida == true) {
@@ -69,6 +71,7 @@ public class PessoaService {
         throw new ErroUuidInvalidoException();
     }
 
+    @Cacheable(cacheNames = "buscarPessoaNomeList")
     public List<PessoaRetornoDto> buscarPessoaNomeList(String nome) {
         boolean valida = validaNome.validadorNome(nome);
         if (valida == true) {
@@ -83,6 +86,7 @@ public class PessoaService {
         throw new ErroBuscarIdSeguroException();
     }
 
+    @Cacheable(cacheNames = "buscarPessoaSeguros")
     public List<PessoaRetornoDto> buscarPessoaSeguros(String id) {
         List<PessoaRetornoDto> listPessoa = new ArrayList<>();
         if (id != null) {
