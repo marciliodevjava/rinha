@@ -13,6 +13,3 @@ public class ValidadorUuid {
         return UUID_PATTERN.matcher(uuid).matches();
     }
 }
-
-
-
