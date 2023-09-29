@@ -1,6 +1,7 @@
 package br.com.rinha.dto.request;
 
 import br.com.rinha.annotations.interfaces.CPFouCNPJ;
+import br.com.rinha.annotations.interfaces.NaoNulo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -12,10 +13,10 @@ import java.util.List;
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PessoaDto {
-    @NotBlank(message = "Campo nome não poder ser nulo")
+    @NaoNulo(message = "Campo nome não poder ser nulo, coloque um nome valido")
     private String nome;
-    @NotBlank(message = "Campo cpfCnpj não poder ser nulo")
-    @CPFouCNPJ
+    @NaoNulo(message = "Campo nome não poder ser nulo, coloque um nome valido")
+    @CPFouCNPJ(message = "CPF ou CNPJ inválido, coloque um CPF ou CNPJ válido.")
     private String cpfCnpj;
     private String nacimento;
     private List<String> seguros;
