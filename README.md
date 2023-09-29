@@ -62,14 +62,15 @@ Resposta de Sucesso: Retorna os detalhes da pessoa criada.
     } 
 
 ### 2. Consultar Pessoa por ID
-   URL: /pessoa/{id}  
-   Método: GET
-   Descrição: Consulta os detalhes de uma pessoa por ID.  
-   Parâmetros de entrada:  
-   id (String, obrigatório): ID da pessoa a ser consultada.  
-   
-   Exemplo de Requisição:
-   /pessoa/cafc5729-a332-448a-996b-4bea910ff7d1   
+
+URL: /pessoa/{id}  
+Método: GET
+Descrição: Consulta os detalhes de uma pessoa por ID.  
+Parâmetros de entrada:  
+id (String, obrigatório): ID da pessoa a ser consultada.
+
+Exemplo de Requisição:
+/pessoa/cafc5729-a332-448a-996b-4bea910ff7d1
 
 - **Exemplo de Response:**
   ```json
@@ -83,15 +84,15 @@ Resposta de Sucesso: Retorna os detalhes da pessoa criada.
 
 Resposta de Sucesso: Retorna os detalhes da pessoa com o ID especificado.
 
+### 3. Buscar Pessoas por Termo
 
-### 3. Buscar Pessoas por Termo  
-   URL: /pessoa  
-   Método: GET  
-   Descrição: Busca pessoas com base em um termo de pesquisa.  
-   Parâmetros de consulta: t (String, obrigatório): Termo de pesquisa.    
-   
-   Exemplo de Requisição:
-   /pessoa?t=João   
+URL: /pessoa  
+Método: GET  
+Descrição: Busca pessoas com base em um termo de pesquisa.  
+Parâmetros de consulta: t (String, obrigatório): Termo de pesquisa.
+
+Exemplo de Requisição:
+/pessoa?t=João
 
 - **Exemplo de Response:**
   ```json
@@ -114,13 +115,11 @@ Resposta de Sucesso: Retorna os detalhes da pessoa com o ID especificado.
     ]
   }
 
+Resposta de Sucesso: Retorna uma lista de pessoas que correspondem ao termo de pesquisa.
+Configurações
 
-
- Resposta de Sucesso: Retorna uma lista de pessoas que correspondem ao termo de pesquisa.
-  Configurações  
-
-
-- A API utiliza um banco de dados MySQL e é implantada em containers Docker. As configurações do Docker Compose incluem contêineres para o MySQL, NGINX (balanceador de carga). dois contêineres da aplicação API.
+- A API utiliza um banco de dados MySQL e é implantada em containers Docker. As configurações do Docker Compose incluem
+  contêineres para o MySQL, NGINX (balanceador de carga). dois contêineres da aplicação API.
 
 
 - MySQL:
@@ -129,24 +128,24 @@ Host: mysql
 Porta: 3306   
 Usuário: root  
 Senha: 1234567890  
-Banco de dados: pessoa  
-
+Banco de dados: pessoa
 
 - **Executar a aplicação:**
   ```json
     docker-compose -f docker-compose-mysql.yml up -d
 
-* Você vai precisar desse comando para poder colocar o banco de dados para pode realizar o build do projeto pela primeira vez.   
+* Você vai precisar desse comando para poder colocar o banco de dados para pode realizar o build do projeto pela
+  primeira vez.
 
   ```json
     mvn clean install 
 
-* Para Buildar a API   
+* Para Buildar a API
 
   ```json
     docker-compose up  
 
-* Para realizar o Deploy dos conteiner no Docker    
+* Para realizar o Deploy dos conteiner no Docker
 
 
 - **Aplicação:**
@@ -156,4 +155,5 @@ Conexão com o banco de dados MySQL configurada nas variáveis de ambiente.
 Clone o repositório.
 Execute o Docker Compose para iniciar os contêineres.
 Acesse a API nos endpoints mencionados acima.
-Lembre-se de verificar a documentação da API para obter mais detalhes sobre cada endpoint e os formatos de entrada/saída de dados.
+Lembre-se de verificar a documentação da API para obter mais detalhes sobre cada endpoint e os formatos de entrada/saída
+de dados.
