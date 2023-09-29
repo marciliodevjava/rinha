@@ -41,10 +41,10 @@ public class PessoaResource {
 
     @GetMapping
     public ResponseEntity<List<PessoaRetornoDto>> buscarSeguros(@RequestParam(required = true, name = "t") String termo) {
-
+        boolean validaSeguro = false;
         List<PessoaRetornoDto> retorno;
         boolean validaTermno = validaNome.validadorNome(termo);
-        boolean validaSeguro = validadeSeguro.validadeSeguro(termo);
+        if (!validaTermno) validaSeguro = validadeSeguro.validadeSeguro(termo);
         if (validaTermno == true) {
             retorno = pessoaService.buscarPessoaNomeList(termo);
             return ResponseEntity.ok(retorno);
