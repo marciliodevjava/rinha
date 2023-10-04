@@ -14,7 +14,6 @@ public class FormatadorUtils {
             LocalDate dataNascimento = LocalDate.parse(nacimento, formatter);
             return dataNascimento;
         } catch (Exception e) {
-            // Por exemplo: return null;
             throw new IllegalArgumentException("Formato de data inválido. Use o formato yyyy-MM-dd");
         }
     }
