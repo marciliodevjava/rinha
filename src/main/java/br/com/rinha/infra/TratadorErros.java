@@ -18,6 +18,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.net.ConnectException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -157,6 +158,30 @@ public class TratadorErros {
         ErroResponse erro = new ErroResponse();
         erro.setStatus(HttpStatus.BAD_REQUEST.value());
         erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_TERMO_IVALIDO_EXCEPTION.getMensagem()));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErroResponse> termoDataInvalido(IllegalArgumentException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_TERMO_DATA_INVALIDO_EXCEPTION.getMensagem()));
+        erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        erro.setEndpoint(request.getRequestURI());
+        erro.setProjeto(projeto);
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConnectException.class)
+    public ResponseEntity<ErroResponse> conexaoFalhou(ConnectException ex) {
+
+        ErroResponse erro = new ErroResponse();
+        erro.setStatus(HttpStatus.BAD_REQUEST.value());
+        erro.setMensagem(Collections.singletonList(MensagemEnum.ERRO_TERMO_CONEXAO_EXCEPTION.getMensagem()));
         erro.setTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         erro.setEndpoint(request.getRequestURI());
         erro.setProjeto(projeto);
