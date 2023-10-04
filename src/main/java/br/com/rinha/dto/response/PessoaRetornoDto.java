@@ -13,6 +13,6 @@ public class PessoaRetornoDto {
     private String id;
     private String nome;
     private String cpfCnpj;
-    private String nacimento;
+    private String nascimento;
     private List<String> seguros;
 }
