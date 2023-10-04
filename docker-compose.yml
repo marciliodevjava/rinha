@@ -14,7 +14,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.30'
+          cpus: '0.45'
           memory: 768mb
         reservations:
           cpus: '0.10'
@@ -32,10 +32,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.20'
+          cpus: '0.25'
           memory: 256mb
         reservations:
-          cpus: '0.15'
+          cpus: '0.10'
           memory: 128m
 
   app1:
@@ -57,10 +57,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.4'
           memory: 1g
         reservations:
-          cpus: '0.2'
+          cpus: '0.10'
           memory: 396m
     hostname: app1
 
@@ -83,10 +83,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: '0.4'
           memory: 1g
         reservations:
-          cpus: '0.2'
+          cpus: '0.1'
           memory: 396m
     hostname: app2
 
