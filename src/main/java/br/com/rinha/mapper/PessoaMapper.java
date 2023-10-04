@@ -27,7 +27,7 @@ public class PessoaMapper {
             pessoas.setId(geradorUuid.gerarUuid());
             pessoas.setNome(pessoaDto.getNome());
             pessoas.setCpfCnpj(pessoaDto.getCpfCnpj());
-            pessoas.setNascimento(formatadorUtils.dataStringDate(pessoaDto.getNacimento()));
+            pessoas.setNascimento(formatadorUtils.dataStringDate(pessoaDto.getNascimento()));
             pessoas.setSeguros(pessoaDto.getSeguros());
             return pessoas;
         }
@@ -41,7 +41,7 @@ public class PessoaMapper {
             dto.setId(pessoas.getId());
             dto.setNome(pessoas.getNome());
             dto.setCpfCnpj(pessoas.getCpfCnpj());
-            dto.setNacimento(formatadorUtils.dataDateString(pessoas.getNascimento()));
+            dto.setNascimento(formatadorUtils.dataDateString(pessoas.getNascimento()));
             dto.setSeguros(this.verificaSeguro(pessoas.getSeguros()));
             return dto;
         }
@@ -54,7 +54,7 @@ public class PessoaMapper {
             dto.setId(retorno.getId());
             dto.setNome(retorno.getNome());
             dto.setCpfCnpj(retorno.getCpfCnpj());
-            dto.setNacimento(formatadorUtils.dataDateString(retorno.getNascimento()));
+            dto.setNascimento(formatadorUtils.dataDateString(retorno.getNascimento()));
             dto.setSeguros(this.verificaSeguro(retorno.getSeguros()));
             return dto;
         }
