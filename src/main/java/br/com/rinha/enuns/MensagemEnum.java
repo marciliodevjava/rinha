@@ -9,7 +9,10 @@ public enum MensagemEnum {
     ERRO_ID_NAO_EXCEPTION("Sem dados nessa consulta."),
     ERRO_UUID_IVALIDO_EXCEPTION("O id da solicitação não é um id válido."),
     ERRO_SEGURO_IVALIDO_EXCEPTION("Informar t é obrigatório."),
-    ERRO_TERMO_IVALIDO_EXCEPTION("Informar t é obrigatório.");
+    ERRO_TERMO_IVALIDO_EXCEPTION("Informar t é obrigatório."),
+    ERRO_TERMO_DATA_INVALIDO_EXCEPTION("Data invalida."),
+    ERRO_TERMO_CONEXAO_EXCEPTION("Falha de Connect"),
+    ERRO_TERMO_IO_EXCEPTION("Erro generico");
 
     private final String mensagem;
 
